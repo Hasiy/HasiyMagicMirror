@@ -28,6 +28,9 @@
    ```shell
    sudo vim /etc/init.d/vncserver
    ```
+     ```shell
+   sudo mv vncsever /etc/init.d/
+   ```
    文件内容：
    ```shell
       #!/bin/sh
