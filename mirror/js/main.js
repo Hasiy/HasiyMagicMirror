@@ -51,12 +51,12 @@ jQuery(document).ready(function($) {
 
 	weather.init();
 
-	calendar.init();
+	// calendar.init();
 
-	compliments.init();
+	// compliments.init();
 
-	news.init();
+	// news.init();
 
-	tem_hum.init();	
+	// tem_hum.init();
 
 });

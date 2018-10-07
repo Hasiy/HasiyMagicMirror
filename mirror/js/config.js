@@ -6,7 +6,7 @@ var config = {
     weather: {
         params: {
             key: "252b74937c4e42c4873fa9489e8b3f4f",
-            location: "盐城"
+            location: "无锡"
         }
     },
     tem_hum: {
