@@ -63,6 +63,7 @@
   *  内存使用情况
 
 #### 07：周围交通情况（地图显示）
+
 * 后期添加 以图显示  显示主干道交通情况（用聚合API 根据外网ip识别）
 
 #### 08：后台管理内容( 需要账号登录)
@@ -87,3 +88,40 @@
   * demo1：站在镜子前能显示 XX先生早上好或XX女生早上好
   * demo2：女主人在镜子前 替换成女主人喜欢的新闻源
   * demo3：个人安排的显示 对应人物的内容
+  * 
+
+# 安装 
+
+安装 Nginx 和 PHP7
+在终端运行以下命令
+
+sudo apt-get update
+sudo apt-get install nginx php7.0-fpm php7.0-cli php7.0-curl php7.0-gd php7.0-mcrypt php7.0-cgi
+sudo service nginx start
+sudo service php7.0-fpm restart
+如果安装成功，可通过 http://树莓派IP 访问到 Nginx 的默认页。Nginx 的根目录在 /var/www/html。
+进行以下操作来让 Nginx 能处理 PHP。
+sudo nano /etc/nginx/sites-available/default
+
+location / {
+
+First attempt to serve request as file, then
+
+as directory, then fall back to displaying a 404.
+
+​                try_files $uri $uri/ =404;
+​        }
+替换为
+
+location / {
+index  index.html index.htm index.php default.html default.htm default.php;
+}
+
+location ~\.php$ {
+fastcgi_pass unix:/run/php/php7.0-fpm.sock;fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+include fastcgi_params;
+}
+Ctrl + O 保存再 Ctrl + X 退出。
+sudo service nginx restart
+最后重启 Nginx 即可，以上步骤在树莓派3B + Raspbian Stretch 系统版本上测试通过。
+
