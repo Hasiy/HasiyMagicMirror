@@ -95,33 +95,45 @@
 安装 Nginx 和 PHP7
 在终端运行以下命令
 
+```sh
 sudo apt-get update
 sudo apt-get install nginx php7.0-fpm php7.0-cli php7.0-curl php7.0-gd php7.0-mcrypt php7.0-cgi
 sudo service nginx start
 sudo service php7.0-fpm restart
-如果安装成功，可通过 http://树莓派IP 访问到 Nginx 的默认页。Nginx 的根目录在 /var/www/html。
-进行以下操作来让 Nginx 能处理 PHP。
-sudo nano /etc/nginx/sites-available/default
+```
 
+如果安装成功，可通过 http://树莓派IP 访问到 Nginx 的默认页。
+
+Nginx 的根目录在 cd /var/www/html。
+进行以下操作来让 Nginx 能处理 PHP
+
+```shell
+sudo vim /etc/nginx/sites-available/default
+```
+
+
+```shell
 location / {
-
-First attempt to serve request as file, then
-
-as directory, then fall back to displaying a 404.
-
-​                try_files $uri $uri/ =404;
-​        }
+# First attempt to serve request as file, then
+# as directory, then fall back to displaying a 404.
+try_files $uri $uri/ =404;
+}
+```
 替换为
-
+```shell
 location / {
 index  index.html index.htm index.php default.html default.htm default.php;
 }
-
+```
+```shell
 location ~\.php$ {
 fastcgi_pass unix:/run/php/php7.0-fpm.sock;fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
 include fastcgi_params;
 }
-Ctrl + O 保存再 Ctrl + X 退出。
+```
+```shell
 sudo service nginx restart
+```
+
 最后重启 Nginx 即可，以上步骤在树莓派3B + Raspbian Stretch 系统版本上测试通过。
 
